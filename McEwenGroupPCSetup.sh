@@ -34,14 +34,33 @@ fi
 ### Constants ###
 ORIGINAL_WORKING_DIRECTORY=$(pwd)
 
-
+# Functions
 print_vars() {
     echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
 }
 
+# Begin install
 print_vars
 
+## Base/Main
+apt-get install libltdl3-dev          # A system independent dlopen wrapper for GNU libtool.
+apt-get install libqhull-dev          # Calculates convex hulls and related structures.
+
+## Manual
+apt-get install texlive-latex-base    # TeX Live: Basic LaTeX packages.
+apt-get install texinfo               # Documentation system for online information and printed output.
+apt-get install openjade              # Implementation of the DSSSL language.
+apt-get install jadetex               # Generator of printable output from SGML or XML using Jade.
+apt-get install docbook               # Standard SGML representation system for technical documents.
+apt-get install docbook2x             # Converts DocBook/XML documents into man pages and TeXinfo.
+apt-get install libxml-dom-perl       # Perl module for building DOM Level 1 compliant doc structures.
+apt-get install docbook-dsssl         # Modular DocBook DSSSL stylesheets, for print and HTML.
+
+## Drivers
+apt-get install plplot12-driver-cairo # Includes pdfcairo
+apt-get install plplot12-driver-qt    # Includes pdfqt
+
+echo ""
 echo "Done."
 echo ""
-
-
+# End install
