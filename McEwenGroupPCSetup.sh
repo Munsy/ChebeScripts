@@ -31,12 +31,20 @@ if [ $EUID -ne 0 ]
         echo "User is root. Proceeding..."
 fi
 
+echo -n "Enter the name of the user you want to set up and press [ENTER]: "
+read NEWUSER
+
 ### Constants ###
 ORIGINAL_WORKING_DIRECTORY=$(pwd)
+PLPLOT_URL="http://downloads.sourceforge.net/project/plplot/plplot/5.9.9%20Source/plplot-5.9.9.tar.gz"
+PLPLOTVERSION="5.9.9"
 
 # Functions
 print_vars() {
     echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
+    echo "PLPLOT_URL = $PLPLOT_URLURL"
+    echo "PLPLOTVERSION = $PLPLOTVERSION"
+    echo "NEWUSER = $NEWUSER"
 }
 
 # Begin install
@@ -59,6 +67,36 @@ apt-get install docbook-dsssl         # Modular DocBook DSSSL stylesheets, for p
 ## Drivers
 apt-get install plplot12-driver-cairo # Includes pdfcairo
 apt-get install plplot12-driver-qt    # Includes pdfqt
+
+# Export plplot version as environment variable.
+export PL_VERSION=$PLPLOTVERSION
+
+# Switch to new user's home directory.
+cd /home/$NEWUSER 2> /dev/null
+if [ 0 -ne $? ]
+    then
+        echo "Failed to switch to /home/$NEWUSER"
+        exit 1
+    else
+        echo "Switched to /home/$NEWUSER..."
+fi
+
+# Make directory for plplot.
+mkdir plplot
+
+# Switch to plplot directory.
+cd ./plplot 2> /dev/null
+if [ 0 -ne $? ]
+    then
+        echo "Failed to switch to /home/$NEWUSER/plplot"
+    else
+        echo "Switched to /home/$NEWUSER/plplot..."
+fi
+
+# Download plplot.
+wget $PLPLOT_URL
+
+tar zxvf plplot-$PL_VERSION.tar.gz
 
 echo ""
 echo "Done."
