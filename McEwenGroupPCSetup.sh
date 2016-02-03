@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 # McEwenGroupPCSetup.sh
 # Installs plplot 5.9.9 on Ubuntu 14.04.3 Trusty Tahr
 #  The intention here is to make it so that users of
@@ -8,7 +8,7 @@
 #  not look that great. PDF format is usually preferred.
 #
 # Written by: Tim Munson (tmunson@wsu.edu)
-# Last Updated: 1/28/2016
+# Last Updated: 2/2/2016
 
 echo ""
 
@@ -42,38 +42,34 @@ ORIGINAL_WORKING_DIRECTORY=$(pwd)
 PLPLOT_URL="http://downloads.sourceforge.net/project/plplot/plplot/5.9.9%20Source/plplot-5.9.9.tar.gz"
 PLPLOTVERSION="5.9.9"
 
-# Functions
-print_vars() {
-    echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
-    echo "PLPLOT_URL = $PLPLOT_URLURL"
-    echo "PLPLOTVERSION = $PLPLOTVERSION"
-    echo "NEWUSER = $NEWUSER"
-}
+# Begin installation
+echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
+echo "PLPLOT_URL = $PLPLOT_URLURL"
+echo "PLPLOTVERSION = $PLPLOTVERSION"
+echo "NEWUSER = $NEWUSER"
 
-# Begin install
-print_vars
+# Add './' to PATH environment variable.
+export PATH="$PATH:./"
 
-## Base/Main
-apt-get install libltdl3-dev          # A system independent dlopen wrapper for GNU libtool.
-apt-get install libqhull-dev          # Calculates convex hulls and related structures.
+## Base/Main.
+apt-get -y install libltdl3-dev          # A system independent dlopen wrapper for GNU libtool.
+apt-get -y install libqhull-dev          # Calculates convex hulls and related structures.
 
-## Manual
-apt-get install texlive-latex-base    # TeX Live: Basic LaTeX packages.
-apt-get install texinfo               # Documentation system for online information and printed output.
-apt-get install openjade              # Implementation of the DSSSL language.
-apt-get install jadetex               # Generator of printable output from SGML or XML using Jade.
-apt-get install docbook               # Standard SGML representation system for technical documents.
-apt-get install docbook2x             # Converts DocBook/XML documents into man pages and TeXinfo.
-apt-get install libxml-dom-perl       # Perl module for building DOM Level 1 compliant doc structures.
-apt-get install docbook-dsssl         # Modular DocBook DSSSL stylesheets, for print and HTML.
+## Manual.
+apt-get -y install texlive-latex-base    # TeX Live: Basic LaTeX packages.
+apt-get -y install texinfo               # Documentation system for online information and printed output.
+apt-get -y install openjade              # Implementation of the DSSSL language.
+apt-get -y install jadetex               # Generator of printable output from SGML or XML using Jade.
+apt-get -y install docbook               # Standard SGML representation system for technical documents.
+apt-get -y install docbook2x             # Converts DocBook/XML documents into man pages and TeXinfo.
+apt-get -y install libxml-dom-perl       # Perl module for building DOM Level 1 compliant doc structures.
+apt-get -y install docbook-dsssl         # Modular DocBook DSSSL stylesheets, for print and HTML.
 
-## Drivers
-apt-get install plplot12-driver-cairo # Includes pdfcairo
-apt-get install plplot12-driver-qt    # Includes pdfqt
-apt-get install cl-plplot
+## Drivers.
+apt-get -y install plplot12-driver-qt    # Includes pdfqt.
+apt-get -y install cl-plplot             # A CFFI based interface to the PLplot scientific plotting library.
 
-# Export plplot version as environment variable.
-export PL_VERSION=$PLPLOTVERSION
+apt-get -y install make                  # Install make (needed for cmake and plplot Makefiles).
 
 # Switch to new user's home directory.
 cd /home/$NEWUSER 2> /dev/null
@@ -84,6 +80,36 @@ if [ 0 -ne $? ]
     else
         echo "Switched to /home/$NEWUSER..."
 fi
+
+# Download cmake tarball.
+wget https://cmake.org/files/v3.5/cmake-3.5.0-rc1.tar.gz
+tar xzvf cmake-3.5.0-rc1.tar.gz
+
+# Switch to freshly extracted cmake directory.
+cd cmake-3.5.0-rc1
+if [ 0 -ne $? ]
+    then
+        echo "Failed to switch to /home/$NEWUSER/cmake-3.5.0-rc1"
+        exit 1
+    else
+        echo "Switched to /home/$NEWUSER/cmake-3.5.0-rc1..."
+fi
+
+# Install cmake.
+./bootstrap && make && make install
+
+# Switch to new user's home directory.
+cd /home/$NEWUSER 2> /dev/null
+if [ 0 -ne $? ]
+    then
+        echo "Failed to switch to /home/$NEWUSER"
+        exit 1
+    else
+        echo "Switched to /home/$NEWUSER..."
+fi
+
+# Export plplot version as environment variable.
+export PL_VERSION=$PLPLOTVERSION
 
 # Make directory for plplot.
 mkdir plplot
@@ -101,10 +127,12 @@ fi
 # Download plplot.
 wget $PLPLOT_URL
 
+# Unpack tarball into plplot subdirectory.
 tar zxvf plplot-$PL_VERSION.tar.gz
+
+# Create and move into a new subdirectory where the configuration and build steps will be done.
 mkdir build_directory
 cd build_directory
-
 if [ 0 -ne $? ]
     then
         echo "Failed to switch to /home/$NEWUSER/plplot/build_directory"
@@ -113,14 +141,17 @@ if [ 0 -ne $? ]
         echo "Switched to /home/$NEWUSER/plplot/build_directory..."
 fi
 
+# Configure plplot using the cmake application and capture output int he 'cmake.out' file.
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/home/$NEWUSER/plplot/install_directory ../plplot-$PL_VERSION >& cmake.out
-more cmake.out
+cat cmake.out
 
+# Build plplot and caputure the resulting output in the cmake.out file.
 make VERBOSE=1 >& make.out
-more make.out
+cat make.out
 
+# Installs plplot in the /home/$NEWUSER/plplot/install_directory as the install prefix. Capture output in make_install.out file.
 make VERBOSE=1 install >& make_install.out
-more make_install.out
+cat make_install.out
 
 echo ""
 echo "Done."
