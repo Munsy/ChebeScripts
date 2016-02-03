@@ -33,6 +33,9 @@ fi
 
 echo -n "Enter the name of the user you want to set up and press [ENTER]: "
 read NEWUSER
+echo "Making account $NEWUSER..."
+
+adduser $NEWUSER
 
 ### Constants ###
 ORIGINAL_WORKING_DIRECTORY=$(pwd)
@@ -67,6 +70,7 @@ apt-get install docbook-dsssl         # Modular DocBook DSSSL stylesheets, for p
 ## Drivers
 apt-get install plplot12-driver-cairo # Includes pdfcairo
 apt-get install plplot12-driver-qt    # Includes pdfqt
+apt-get install cl-plplot
 
 # Export plplot version as environment variable.
 export PL_VERSION=$PLPLOTVERSION
@@ -89,6 +93,7 @@ cd ./plplot 2> /dev/null
 if [ 0 -ne $? ]
     then
         echo "Failed to switch to /home/$NEWUSER/plplot"
+        exit 1
     else
         echo "Switched to /home/$NEWUSER/plplot..."
 fi
@@ -97,6 +102,25 @@ fi
 wget $PLPLOT_URL
 
 tar zxvf plplot-$PL_VERSION.tar.gz
+mkdir build_directory
+cd build_directory
+
+if [ 0 -ne $? ]
+    then
+        echo "Failed to switch to /home/$NEWUSER/plplot/build_directory"
+        exit 1
+    else
+        echo "Switched to /home/$NEWUSER/plplot/build_directory..."
+fi
+
+cmake -DCMAKE_INSTALL_PREFIX:PATH=/home/$NEWUSER/plplot/install_directory ../plplot-$PL_VERSION >& cmake.out
+more cmake.out
+
+make VERBOSE=1 >& make.out
+more make.out
+
+make VERBOSE=1 install >& make_install.out
+more make_install.out
 
 echo ""
 echo "Done."
