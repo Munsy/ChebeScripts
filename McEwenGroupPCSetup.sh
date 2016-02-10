@@ -44,7 +44,7 @@ PLPLOTVERSION="5.9.9"
 
 # Begin installation
 echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
-echo "PLPLOT_URL = $PLPLOT_URLURL"
+echo "PLPLOT_URL = $PLPLOT_URL"
 echo "PLPLOTVERSION = $PLPLOTVERSION"
 echo "NEWUSER = $NEWUSER"
 
@@ -53,6 +53,9 @@ export PATH="$PATH:./"
 
 # Install g++ (Or else cmake will fail)
 apt-get -y install g++
+
+# Install Fortran compiler
+apt-get -y install gfortran
 
 ## Base/Main.
 apt-get -y install libltdl3-dev          # A system independent dlopen wrapper for GNU libtool.
