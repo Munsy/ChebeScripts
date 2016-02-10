@@ -74,6 +74,19 @@ apt-get -y install cl-plplot             # A CFFI based interface to the PLplot 
 
 apt-get -y install make                  # Install make (needed for cmake and plplot Makefiles).
 
+# Switch pkgconfig directory.
+cd $ORIGINAL_WORKING_DIRECTORY/McEwenDependencies/usr/lib/pkgconfig 2> /dev/null
+if [ 0 -ne $? ]
+    then
+        echo "Failed to switch to $ORIGINAL_WORKING_DIRECTORY/McEwenDependencies/usr/lib/pkgconfig"
+        exit 1
+    else
+        echo "Switched to $ORIGINAL_WORKING_DIRECTORY/McEwenDependencies/usr/lib/pkgconfig..."
+fi
+
+# Add plplotd-f77.pc to /usr/lib/pkgconfig
+cp plplotd-f77.pc /usr/lib/pkgconfig/
+
 # Switch to new user's home directory.
 cd /home/$NEWUSER 2> /dev/null
 if [ 0 -ne $? ]
