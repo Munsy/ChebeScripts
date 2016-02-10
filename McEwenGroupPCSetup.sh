@@ -51,6 +51,9 @@ echo "NEWUSER = $NEWUSER"
 # Add './' to PATH environment variable.
 export PATH="$PATH:./"
 
+# Install g++ (Or else cmake will fail)
+apt-get -y install g++
+
 ## Base/Main.
 apt-get -y install libltdl3-dev          # A system independent dlopen wrapper for GNU libtool.
 apt-get -y install libqhull-dev          # Calculates convex hulls and related structures.
