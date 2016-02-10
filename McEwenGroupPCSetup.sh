@@ -17,7 +17,7 @@ if [ -n "$BASH_VERSION" ]
         echo "Running bash..."
     else
         echo "NOTE: You should run this script with:"
-        echo "'bash plplotInstall.sh'"
+        echo "'bash McEwenGroupPCSetup.sh"
         echo ""
         exit 1
 fi
