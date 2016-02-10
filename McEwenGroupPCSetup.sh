@@ -8,7 +8,7 @@
 #  not look that great. PDF format is usually preferred.
 #
 # Written by: Tim Munson (tmunson@wsu.edu)
-# Last Updated: 2/2/2016
+# Last Updated: 2/9/2016
 
 echo ""
 
