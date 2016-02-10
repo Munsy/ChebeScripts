@@ -1,0 +1,10 @@
+libdir=/usr/lib
+includedir=/usr/include/plplot
+drvdir=/usr/lib/plplot5.9.9/driversd
+
+Name: PLplot F77
+Description: Scientific plotting library (F77 bindings, double precision)
+Requires: plplotd
+Version: 5.9.9
+Libs: -L${libdir} -lplplotf77d -lplplotf77cd 
+Cflags: -I${includedir} -I/usr/lib/fortran/include/plplot 
