@@ -51,6 +51,10 @@ echo "NEWUSER = $NEWUSER"
 # Add './' to PATH environment variable.
 export PATH="$PATH:./"
 
+# Update and upgrade.
+apt-get -y update
+apt-get -y upgrade
+
 # Install g++ (Or else cmake will fail)
 apt-get -y install g++
 
