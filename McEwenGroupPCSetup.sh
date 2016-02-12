@@ -118,7 +118,8 @@ if [ 0 -ne $? ]
         echo "Switched to /home/$NEWUSER/cmake-3.5.0-rc1..."
 fi
 
-# Install cmake.
+# Configure and install cmake.
+./configure
 ./bootstrap && make && make install
 
 # Switch to new user's home directory.
