@@ -7,9 +7,6 @@ USER root
 # Update first
 RUN apt-get -qq update
 
-# Install cURL
-RUN apt-get install -qq -y curl
-
 # Install git
 RUN apt-get install -qq -y git
 
@@ -26,6 +23,8 @@ RUN echo "root:a" | chpasswd
 
 WORKDIR /root
 
-RUN curl https://raw.githubusercontent.com/Munsy/ChebeScripts/master/McEwenGroupPCSetup.sh
+RUN git clone https://github.com/Munsy/ChebeScripts.git
+
+WORKDIR /root/ChebeScripts/McEwen
 
 RUN bash McEwenGroupPCSetup.sh

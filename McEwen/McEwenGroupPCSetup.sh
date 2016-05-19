@@ -41,6 +41,7 @@ adduser $NEWUSER
 ORIGINAL_WORKING_DIRECTORY=$(pwd)
 PLPLOT_URL="http://downloads.sourceforge.net/project/plplot/plplot/5.9.9%20Source/plplot-5.9.9.tar.gz"
 PLPLOTVERSION="5.9.9"
+CMAKE_VERSION="2.6.0"
 
 # Begin installation
 echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
