@@ -40,7 +40,7 @@ if [ -z $1 ]
         echo "Making account $NEWUSER..."
 fi
 
-RUN adduser --disabled-password --gecos '' $NEWUSER
+adduser --disabled-password --gecos '' $NEWUSER
 
 ### Constants ###
 ORIGINAL_WORKING_DIRECTORY=$(pwd)
