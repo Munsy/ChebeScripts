@@ -10,13 +10,17 @@ RUN apt-get -qq update
 # Install git
 RUN apt-get install -qq -y git
 
+# Install wget
+RUN apt-get install -qq -y wget
+
 # Install other friends
-RUN apt-get install -qq -y --no-install-recommends \
-		g++ \
-		gcc \
-		libc6-dev \
-		make \
-	&& rm -rf /var/lib/apt/lists/*
+#RUN apt-get install -qq -y --no-install-recommends \
+#		g++ \
+#		gcc \
+#		libc6-dev \
+#		make \
+#	&& rm -rf /var/lib/apt/lists/*
+RUN rm -rf /var/lib/apt/lists/*
 
 # Change root password to 'a'
 RUN echo "root:a" | chpasswd
@@ -27,4 +31,4 @@ RUN git clone https://github.com/Munsy/ChebeScripts.git
 
 WORKDIR /root/ChebeScripts/McEwen
 
-RUN bash McEwenGroupPCSetup.sh testuser
+#RUN bash McEwenGroupPCSetup.sh testuser

@@ -115,7 +115,7 @@ wget https://github.com/Munsy/ChebeScripts/blob/master/McEwen/McEwenDependencies
 tar xzvf cmake-$CMAKE_VERSION.tar.gz
 
 # Switch to freshly extracted cmake directory.
-cd cmake-CMAKE_VERSION
+cd cmake-$CMAKE_VERSION
 if [ 0 -ne $? ]
     then
         echo "Failed to switch to /home/$NEWUSER/cmake-$CMAKE_VERSION"
