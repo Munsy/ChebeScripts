@@ -17,7 +17,7 @@ if [ -n "$BASH_VERSION" ]
         echo "Running bash..."
     else
         echo "NOTE: You should run this script with:"
-        echo "'bash McEwenGroupPCSetup.sh'"
+        echo "'bash McEwenGroupPCSetup.sh [NEWUSER]'"
         echo ""
         exit 1
 fi
@@ -31,11 +31,16 @@ if [ $EUID -ne 0 ]
         echo "User is root. Proceeding..."
 fi
 
-echo -n "Enter the name of the user you want to set up and press [ENTER]: "
-read NEWUSER
-echo "Making account $NEWUSER..."
+if [ -z $1 ]
+    then
+        echo "ERROR: No username supplied as argument."
+        exit 1
+    else
+        NEWUSER=$1
+        echo "Making account $NEWUSER..."
+fi
 
-adduser $NEWUSER
+RUN adduser --disabled-password --gecos '' $NEWUSER
 
 ### Constants ###
 ORIGINAL_WORKING_DIRECTORY=$(pwd)
@@ -106,17 +111,17 @@ if [ 0 -ne $? ]
 fi
 
 # Download cmake tarball.
-wget https://cmake.org/files/v3.5/cmake-3.5.0-rc1.tar.gz
-tar xzvf cmake-3.5.0-rc1.tar.gz
+wget https://github.com/Munsy/ChebeScripts/blob/master/McEwen/McEwenDependencies/cmake-$CMAKE_VERSION.tar.gz
+tar xzvf cmake-$CMAKE_VERSION.tar.gz
 
 # Switch to freshly extracted cmake directory.
-cd cmake-3.5.0-rc1
+cd cmake-CMAKE_VERSION
 if [ 0 -ne $? ]
     then
-        echo "Failed to switch to /home/$NEWUSER/cmake-3.5.0-rc1"
+        echo "Failed to switch to /home/$NEWUSER/cmake-$CMAKE_VERSION"
         exit 1
     else
-        echo "Switched to /home/$NEWUSER/cmake-3.5.0-rc1..."
+        echo "Switched to /home/$NEWUSER/cmake-$CMAKE_VERSION..."
 fi
 
 # Configure and install cmake.
