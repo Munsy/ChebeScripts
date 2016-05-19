@@ -27,4 +27,4 @@ RUN git clone https://github.com/Munsy/ChebeScripts.git
 
 WORKDIR /root/ChebeScripts/McEwen
 
-RUN bash McEwenGroupPCSetup.sh 
+RUN bash McEwenGroupPCSetup.sh testuser
