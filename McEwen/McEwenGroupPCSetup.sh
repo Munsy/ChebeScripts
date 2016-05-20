@@ -47,7 +47,7 @@ ORIGINAL_WORKING_DIRECTORY=$(pwd)
 PLPLOT_URL="http://downloads.sourceforge.net/project/plplot/plplot/5.9.9%20Source/plplot-5.9.9.tar.gz"
 PLPLOTVERSION="5.9.9"
 CMAKE_VERSION="2.6.0"
-CMAKE_URL="http://eecs.wsu.edu/~tmunson/cmake-$CMAKE_VERSION.tar.gz"
+CMAKE_URL="http://www.cmake.org/files/v2.6/cmake-$CMAKE_VERSION.tar.gz"
 
 # Begin installation
 echo "ORIGINAL_WORKING_DIRECTORY = $ORIGINAL_WORKING_DIRECTORY"
@@ -172,7 +172,7 @@ if [ 0 -ne $? ]
         echo "Switched to /home/$NEWUSER/plplot/build_directory..."
 fi
 
-# Configure plplot using the cmake application and capture output int he 'cmake.out' file.
+# Configure plplot using the cmake application and capture output in the 'cmake.out' file.
 cmake -DCMAKE_INSTALL_PREFIX:PATH=/home/$NEWUSER/plplot/install_directory ../plplot-$PL_VERSION >& cmake.out
 cat cmake.out
 

@@ -1,0 +1,22 @@
+
+apt-get install fort77
+
+http://mirrors.kernel.org/ubuntu/pool/universe/p/plplot/libplplot-dev_5.9.9-2ubuntu2_amd64.deb
+
+http://mirrors.kernel.org/ubuntu/pool/universe/p/plplot/libplplot-c++10_5.9.9-2ubuntu2_amd64.deb
+
+http://mirrors.kernel.org/ubuntu/pool/universe/p/plplot/libplplot-fortran9_5.9.9-2ubuntu2_amd64.deb
+
+http://mirrors.kernel.org/ubuntu/pool/universe/p/plplot/libplplot11_5.9.9-2ubuntu2_amd64.deb
+
+http://www.cmake.org/files/v2.6/cmake-2.6.4.tar.gz
+
+get cmake
+
+./configure
+
+make
+
+make install
+
+get plplot
